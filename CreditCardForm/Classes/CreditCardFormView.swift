@@ -30,6 +30,7 @@ public class CreditCardFormView : UIView {
     fileprivate var expireDateText: UILabel  = UILabel(frame: .zero)
     fileprivate var backLine: UIView         = UIView(frame: .zero)
     fileprivate var cvc: AKMaskField         = AKMaskField(frame: .zero)
+    fileprivate var cvcFront: AKMaskField    = AKMaskField(frame: .zero)
     fileprivate var chipImg: UIImageView     = UIImageView(frame: .zero)
     fileprivate var amex                    = false
     
@@ -151,6 +152,7 @@ public class CreditCardFormView : UIView {
         createBackView()
         createBackLine()
         createCVC()
+        createCVCFront()
     }
     
     private func setGradientBackground(v: UIView, top: CGColor, bottom: CGColor) {
@@ -365,6 +367,25 @@ public class CreditCardFormView : UIView {
         self.addConstraint(NSLayoutConstraint(item: cvc, attribute: NSLayoutConstraint.Attribute.trailing, relatedBy: NSLayoutConstraint.Relation.equal, toItem: backView, attribute: NSLayoutConstraint.Attribute.trailing, multiplier: 1.0, constant: -10));
     }
     
+    private func createCVCFront() {
+        //CVC textfield
+        cvcFront.translatesAutoresizingMaskIntoConstraints = false
+        cvcFront.maskExpression = "...."
+        cvcFront.text = ""
+        cvcFront.textColor = .white
+        cvcFront.textAlignment = NSTextAlignment.center
+        cvcFront.isUserInteractionEnabled = false
+        frontView.addSubview(cvcFront)
+        
+        self.addConstraint(NSLayoutConstraint(item: cvcFront, attribute: NSLayoutConstraint.Attribute.leading, relatedBy: NSLayoutConstraint.Relation.equal, toItem: cardNumber, attribute: NSLayoutConstraint.Attribute.trailing, multiplier: 1.0, constant: -20));
+        
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[view(==50)]", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: ["view": cvcFront]));
+        
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[view(==25)]", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: ["view": cvcFront]));
+        
+        self.addConstraint(NSLayoutConstraint(item: cvcFront, attribute: NSLayoutConstraint.Attribute.bottom, relatedBy: NSLayoutConstraint.Relation.equal, toItem: cardNumber, attribute: NSLayoutConstraint.Attribute.top, multiplier: 1.0, constant: 0));
+    }
+    
     private func setType(colors: [UIColor], alpha: CGFloat, back: UIColor) {
         UIView.animate(withDuration: 2, animations: { () -> Void in
             self.gradientLayer.colors = [colors[0].cgColor, colors[1].cgColor]
@@ -397,7 +418,7 @@ public class CreditCardFormView : UIView {
         }
         let v = CreditCardValidator()
         self.cvc.text = cvc
-        
+        self.cvcFront.text = cvc
         guard let cardN = cardNumber else {
             return
         }
