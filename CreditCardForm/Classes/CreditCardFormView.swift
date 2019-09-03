@@ -375,6 +375,7 @@ public class CreditCardFormView : UIView {
         cvcFront.textColor = .white
         cvcFront.textAlignment = NSTextAlignment.center
         cvcFront.isUserInteractionEnabled = false
+        cvcFront.isHidden = true
         frontView.addSubview(cvcFront)
         
         self.addConstraint(NSLayoutConstraint(item: cvcFront, attribute: NSLayoutConstraint.Attribute.leading, relatedBy: NSLayoutConstraint.Relation.equal, toItem: cardNumber, attribute: NSLayoutConstraint.Attribute.trailing, multiplier: 1.0, constant: -20));
@@ -442,8 +443,10 @@ public class CreditCardFormView : UIView {
                 if(type.name.lowercased() == "amex".lowercased()){
                     if !amex { amex = true }
                     self.cardNumber.maskExpression = "{....} {......} {.....}"
+                    cvcFront.isHidden = false
                 } else {
                     self.cardNumber.maskExpression = "{....} {....} {....} {....}"
+                    cvcFront.isHidden = true
                     amex = false
                 }
                 self.cardNumber.text = cardNumber
