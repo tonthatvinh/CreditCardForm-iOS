@@ -429,7 +429,6 @@ public class CreditCardFormView : UIView {
             self.cardNumber.maskExpression = "{....} {....} {....} {....}"
         }
         if (cardN.count >= 7 || cardN.count < 4) {
-            
             guard let type = v.type(from: "\(cardN as String?)") else {
                 self.brandImageView.image = nil
                 if let name = colors["NONE"] {
@@ -437,11 +436,11 @@ public class CreditCardFormView : UIView {
                 }
                 return
             }
-
+            
             // Visa, Mastercard, Amex etc.
             if let name = colors[type.name] {
                 if(type.name.lowercased() == "amex".lowercased()){
-                    if !amex { amex = true }
+                    amex = true
                     self.cardNumber.maskExpression = "{....} {......} {.....}"
                     cvcFront.isHidden = false
                 } else {
@@ -455,6 +454,10 @@ public class CreditCardFormView : UIView {
             }else{
                 setType(colors: [self.colors["DEFAULT"]![0], self.colors["DEFAULT"]![0]], alpha: 1, back: self.colors["DEFAULT"]![0])
             }
+        } else {
+            self.cardNumber.maskExpression = "{....} {....} {....} {....}"
+            self.cardNumber.text = cardNumber
+            cvcFront.isHidden = true
         }
     }
     
