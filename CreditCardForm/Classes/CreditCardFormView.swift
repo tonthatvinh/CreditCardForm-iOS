@@ -468,7 +468,7 @@ public class CreditCardFormView : UIView {
     }
     
     public func paymentCardTextFieldDidBeginEditingCVC() {
-        if !showingBack {
+        if !showingBack && !amex {
             flip()
             showingBack = true
         }
