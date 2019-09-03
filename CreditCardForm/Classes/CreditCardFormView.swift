@@ -370,12 +370,13 @@ public class CreditCardFormView : UIView {
     private func createCVCFront() {
         //CVC textfield
         cvcFront.translatesAutoresizingMaskIntoConstraints = false
-        cvcFront.maskExpression = "...."
+        cvcFront.maskExpression = "{dddd}"
+        cvcFront.maskTemplate = "****"
         cvcFront.text = ""
+        cvcFront.isHidden = true
         cvcFront.textColor = .white
         cvcFront.textAlignment = NSTextAlignment.center
         cvcFront.isUserInteractionEnabled = false
-        cvcFront.isHidden = true
         frontView.addSubview(cvcFront)
         
         self.addConstraint(NSLayoutConstraint(item: cvcFront, attribute: NSLayoutConstraint.Attribute.leading, relatedBy: NSLayoutConstraint.Relation.equal, toItem: cardNumber, attribute: NSLayoutConstraint.Attribute.trailing, multiplier: 1.0, constant: -20));
