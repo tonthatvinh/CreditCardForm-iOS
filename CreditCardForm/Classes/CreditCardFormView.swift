@@ -440,13 +440,13 @@ public class CreditCardFormView : UIView {
             // Visa, Mastercard, Amex etc.
             if let name = colors[type.name] {
                 if(type.name.lowercased() == "amex".lowercased()){
-                    if !amex {
-                        self.cardNumber.maskExpression = "{....} {....} {....} {...}"
-                        amex = true
-                    }
-                }else {
+                    if !amex { amex = true }
+                    self.cardNumber.maskExpression = "{....} {......} {.....}"
+                } else {
+                    self.cardNumber.maskExpression = "{....} {....} {....} {....}"
                     amex = false
                 }
+                self.cardNumber.text = cardNumber
                 self.brandImageView.image = UIImage(named: type.name, in: Bundle.currentBundle(), compatibleWith: nil)
                 setType(colors: [name[0], name[1]], alpha: 1, back: name[0])
             }else{
