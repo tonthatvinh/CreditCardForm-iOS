@@ -425,40 +425,37 @@ public class CreditCardFormView : UIView {
             return
         }
         
-        if (cardN.count == 0)
-        {
+        if (cardN.count == 0) {
             self.cardNumber.maskExpression = "{....} {....} {....} {....}"
         }
-        if (cardN.count >= 7 || cardN.count < 4) {
-            guard let type = v.type(from: "\(cardN as String?)") else {
-                self.brandImageView.image = nil
-                if let name = colors["NONE"] {
-                    setType(colors: [name[0], name[1]], alpha: 0.5, back: name[0])
-                }
-                return
+        
+        guard let type = v.type(from: "\(cardN as String?)") else {
+            self.brandImageView.image = nil
+            if let name = colors["NONE"] {
+                setType(colors: [name[0], name[1]], alpha: 0.5, back: name[0])
             }
-            
-            // Visa, Mastercard, Amex etc.
-            if let name = colors[type.name] {
-                if(type.name.lowercased() == "amex".lowercased()){
-                    amex = true
-                    self.cardNumber.maskExpression = "{....} {......} {.....}"
-                    cvcFront.isHidden = false
-                } else {
-                    self.cardNumber.maskExpression = "{....} {....} {....} {....}"
-                    cvcFront.isHidden = true
-                    amex = false
-                }
-                self.cardNumber.text = cardNumber
-                self.brandImageView.image = UIImage(named: type.name, in: Bundle.currentBundle(), compatibleWith: nil)
-                setType(colors: [name[0], name[1]], alpha: 1, back: name[0])
-            }else{
-                setType(colors: [self.colors["DEFAULT"]![0], self.colors["DEFAULT"]![0]], alpha: 1, back: self.colors["DEFAULT"]![0])
-            }
-        } else {
             self.cardNumber.maskExpression = "{....} {....} {....} {....}"
             self.cardNumber.text = cardNumber
             cvcFront.isHidden = true
+            return
+        }
+        
+        // Visa, Mastercard, Amex etc.
+        if let name = colors[type.name] {
+            if(type.name.lowercased() == "amex".lowercased()){
+                amex = true
+                self.cardNumber.maskExpression = "{....} {......} {.....}"
+                cvcFront.isHidden = false
+            } else {
+                self.cardNumber.maskExpression = "{....} {....} {....} {....}"
+                cvcFront.isHidden = true
+                amex = false
+            }
+            self.cardNumber.text = cardNumber
+            self.brandImageView.image = UIImage(named: type.name, in: Bundle.currentBundle(), compatibleWith: nil)
+            setType(colors: [name[0], name[1]], alpha: 1, back: name[0])
+        } else {
+            setType(colors: [self.colors["DEFAULT"]![0], self.colors["DEFAULT"]![0]], alpha: 1, back: self.colors["DEFAULT"]![0])
         }
     }
     
