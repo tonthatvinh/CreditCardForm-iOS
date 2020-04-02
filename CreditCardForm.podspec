@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.author       = { "orazz" => "orazz.tm@gmail.com" }
   s.platform     = :ios, "8.0"
   s.source       = { :git => "https://github.com/orazz/CreditCardForm-iOS.git", :tag => s.version.to_s }
-  s.swift_versions = ['4.2', '5.0']
+  s.swift_versions = ['4.2', '5.0', '5.1']
   s.ios.deployment_target = '8.0'
   s.source       = { :git => "https://github.com/tonthatvinh/CreditCardForm-iOS.git", :tag => s.version }
   s.source_files  = "CreditCardForm/Classes/*.swift", "CreditCardForm/*.{h,m}"
